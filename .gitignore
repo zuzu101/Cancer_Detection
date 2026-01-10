@@ -1,0 +1,37 @@
+# Model files (too large for GitHub)
+*.pkl
+*.joblib
+*.h5
+*.weights
+*.pth
+*.onnx
+
+# Dataset images (too large for GitHub)
+Ganas/
+Jinak/
+Non Kanker/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# OS files
+desktop.ini
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.log
+*.bak

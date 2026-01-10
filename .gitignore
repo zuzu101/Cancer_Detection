@@ -1,5 +1,5 @@
-# Model files (too large for GitHub)
-*.pkl
+# Model files (handled by Git LFS)
+# *.pkl files are tracked by Git LFS (see .gitattributes)
 *.joblib
 *.h5
 *.weights

@@ -27,10 +27,49 @@ st.set_page_config(
 st.markdown("""
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-    /* Sidebar width */
+    /* Sidebar styling */
     [data-testid="stSidebar"] {
         min-width: 320px;
         max-width: 320px;
+        background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+    }
+    
+    [data-testid="stSidebar"] > div:first-child {
+        background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+    }
+    
+    /* Custom button styling for navigation */
+    .stButton > button {
+        width: 100%;
+        border-radius: 10px;
+        padding: 12px 16px;
+        font-weight: 500;
+        border: 1px solid #e2e8f0;
+        background: white;
+        color: #475569;
+        transition: all 0.3s ease;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    
+    .stButton > button:hover {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-color: transparent;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        transform: translateY(-2px);
+    }
+    
+    /* Active state simulation via type primary */
+    .stButton > button[kind="primary"] {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-color: transparent;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+    
+    .stButton > button[kind="primary"]:hover {
+        box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        transform: translateY(-2px);
     }
     
     /* Main theme */
@@ -252,73 +291,89 @@ def main():
     # Sidebar - Navigation Only
     with st.sidebar:
         st.markdown("""
-        <div style="text-align: center; padding: 20px 0;">
-            <i class="fas fa-hospital" style="font-size: 48px; color: #667eea;"></i>
-            <h2 style="color: #667eea; margin-top: 10px;">Cancer Classification</h2>
-            <p style="color: #64748b; font-size: 14px;">Medical Image Analysis System</p>
+        <div style="text-align: center; padding: 25px 0 20px 0;">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                        width: 70px; height: 70px; border-radius: 20px; 
+                        margin: 0 auto 15px auto; display: flex; 
+                        align-items: center; justify-content: center;
+                        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);">
+                <i class="fas fa-hospital" style="font-size: 36px; color: white;"></i>
+            </div>
+            <h2 style="color: #1e293b; margin: 0; font-size: 20px; font-weight: 600;">Cancer Classification</h2>
+            <p style="color: #64748b; font-size: 13px; margin-top: 5px;">Medical Image Analysis</p>
         </div>
         """, unsafe_allow_html=True)
         
-        st.markdown("---")
+        st.markdown("""<div style="border-bottom: 1px solid #e2e8f0; margin: 15px 0;"></div>""", unsafe_allow_html=True)
         
         st.markdown("""
-        <div style="margin: 20px 0;">
-            <h3 style="color: #667eea; font-size: 18px; margin-bottom: 15px;">
-                <i class="fas fa-compass"></i> Navigasi
+        <div style="margin: 20px 0 15px 0;">
+            <h3 style="color: #475569; font-size: 14px; font-weight: 600; 
+                       text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">
+                <i class="fas fa-bars" style="margin-right: 8px;"></i>Menu
             </h3>
-            <p style="color: #64748b; font-size: 13px; line-height: 1.8; margin-bottom: 15px;">
-                Pilih menu di bawah untuk mengakses fitur sistem:
-            </p>
         </div>
         """, unsafe_allow_html=True)
         
-        # Navigation buttons
+        # Navigation buttons with spacing
+        st.markdown('<div style="margin-bottom: 8px;">', unsafe_allow_html=True)
         if st.button(
-            "🔬 Image Classification",
+            "🔬  Image Classification",
             use_container_width=True,
-            type="primary" if st.session_state.active_page == 'Image Classification' else "secondary"
+            type="primary" if st.session_state.active_page == 'Image Classification' else "secondary",
+            key="nav_1"
         ):
             st.session_state.active_page = 'Image Classification'
             st.rerun()
+        st.markdown("<p style='font-size: 11px; color: #94a3b8; margin: 4px 0 12px 14px;'>Analisis gambar tunggal</p>", unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
         
-        st.markdown("<p style='font-size: 12px; color: #6c757d; margin: -5px 0 10px 10px;'>Analisis gambar tunggal</p>", unsafe_allow_html=True)
-        
+        st.markdown('<div style="margin-bottom: 8px;">', unsafe_allow_html=True)
         if st.button(
-            "📦 Batch Processing",
+            "📦  Batch Processing",
             use_container_width=True,
-            type="primary" if st.session_state.active_page == 'Batch Processing' else "secondary"
+            type="primary" if st.session_state.active_page == 'Batch Processing' else "secondary",
+            key="nav_2"
         ):
             st.session_state.active_page = 'Batch Processing'
             st.rerun()
+        st.markdown("<p style='font-size: 11px; color: #94a3b8; margin: 4px 0 12px 14px;'>Proses multiple gambar</p>", unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
         
-        st.markdown("<p style='font-size: 12px; color: #6c757d; margin: -5px 0 10px 10px;'>Proses multiple gambar</p>", unsafe_allow_html=True)
-        
+        st.markdown('<div style="margin-bottom: 8px;">', unsafe_allow_html=True)
         if st.button(
-            "📊 Model Analysis",
+            "📊  Model Analysis",
             use_container_width=True,
-            type="primary" if st.session_state.active_page == 'Model Analysis' else "secondary"
+            type="primary" if st.session_state.active_page == 'Model Analysis' else "secondary",
+            key="nav_3"
         ):
             st.session_state.active_page = 'Model Analysis'
             st.rerun()
+        st.markdown("<p style='font-size: 11px; color: #94a3b8; margin: 4px 0 12px 14px;'>Performa & visualisasi</p>", unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
         
-        st.markdown("<p style='font-size: 12px; color: #6c757d; margin: -5px 0 10px 10px;'>Performa & visualisasi</p>", unsafe_allow_html=True)
-        
+        st.markdown('<div style="margin-bottom: 8px;">', unsafe_allow_html=True)
         if st.button(
-            "📖 Information",
+            "📖  Information",
             use_container_width=True,
-            type="primary" if st.session_state.active_page == 'Information' else "secondary"
+            type="primary" if st.session_state.active_page == 'Information' else "secondary",
+            key="nav_4"
         ):
             st.session_state.active_page = 'Information'
             st.rerun()
+        st.markdown("<p style='font-size: 11px; color: #94a3b8; margin: 4px 0 12px 14px;'>Tentang penelitian</p>", unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
         
-        st.markdown("<p style='font-size: 12px; color: #6c757d; margin: -5px 0 10px 10px;'>Tentang penelitian</p>", unsafe_allow_html=True)
-        
-        st.markdown("---")
+        st.markdown("""<div style="border-bottom: 1px solid #e2e8f0; margin: 20px 0 15px 0;"></div>""", unsafe_allow_html=True)
         
         st.markdown("""
-        <div style="text-align: center; padding: 15px 0;">
-            <p style="color: #64748b; font-size: 12px;">
-                <i class="fas fa-graduation-cap"></i> Institut Teknologi Del<br>
+        <div style="background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%); 
+                    padding: 15px; border-radius: 12px; text-align: center;">
+            <i class="fas fa-graduation-cap" style="font-size: 24px; color: #667eea; margin-bottom: 8px;"></i>
+            <p style="color: #475569; font-size: 12px; font-weight: 500; margin: 0;">
+                Institut Teknologi Del
+            </p>
+            <p style="color: #64748b; font-size: 11px; margin: 4px 0 0 0;">
                 Kelompok 4 - IF-10
             </p>
         </div>

@@ -177,20 +177,6 @@ st.markdown("""
         border-radius: 5px;
         margin: 1rem 0;
     }
-    
-    /* Button styling */
-    .stButton>button {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-        padding: 0.5rem 2rem;
-        border-radius: 5px;
-        font-weight: bold;
-    }
-    
-    .stButton>button:hover {
-        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-    }
 </style>
 """, unsafe_allow_html=True)
 

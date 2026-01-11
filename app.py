@@ -358,8 +358,6 @@ def main():
     
     # ==================== PAGE 2: IMAGE CLASSIFICATION ====================
     elif page == "🔍 Image Classification":
-    # ==================== PAGE 2: IMAGE CLASSIFICATION ====================
-    elif page == "🔍 Image Classification":
         st.markdown("""
         <div class="header-container">
             <h1 class="header-title">🔍 Image Classification</h1>

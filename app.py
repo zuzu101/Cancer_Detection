@@ -332,27 +332,13 @@ def main():
         </div>
         """, unsafe_allow_html=True)
     
-    # Main content with tabs
-    tab_names = [
-        "🔬 Image Classification",
-        "📦 Batch Processing", 
-        "📊 Model Analysis",
-        "📖 Information"
-    ]
-    
-    # Create tabs with active state
-    selected_tab = st.tabs(tab_names)
-    tab1, tab2, tab3, tab4 = selected_tab
-    
-    # Switch to active tab based on sidebar click
-    if st.session_state.active_tab == 0:
-        tab_idx = tab1
-    elif st.session_state.active_tab == 1:
-        tab_idx = tab2
-    elif st.session_state.active_tab == 2:
-        tab_idx = tab3
-    else:
-        tab_idx = tab4
+    # Main content with tabs (Streamlit native tabs don't support HTML, so icons are styled via CSS)
+    tab1, tab2, tab3, tab4 = st.tabs([
+        "Image Classification",
+        "Batch Processing", 
+        "Model Analysis",
+        "Information"
+    ])
     
     # TAB 1: Single Image Classification
     with tab1:
@@ -373,7 +359,7 @@ def main():
                 st.image(image, caption="Uploaded Image", use_container_width=True)
                 
                 # Predict button
-                if st.button("🔬 Analyze Image", use_container_width=True, type="primary"):
+                if st.button("Analyze Image", use_container_width=True, type="primary", help="Click to analyze the uploaded image"):
                     with st.spinner("Analyzing image..."):
                         result = predict_image(image, model, scaler)
                     
@@ -470,7 +456,7 @@ def main():
         if uploaded_files:
             st.write(f"**{len(uploaded_files)} images uploaded**")
             
-            if st.button("🚀 Process All Images", use_container_width=True):
+            if st.button("Process All Images", use_container_width=True, type="primary", help="Start batch processing"):
                 results = []
                 progress_bar = st.progress(0)
                 status_text = st.empty()
@@ -493,7 +479,7 @@ def main():
                     
                     progress_bar.progress((idx + 1) / len(uploaded_files))
                 
-                status_text.text("✅ Processing complete!")
+                status_text.text("Processing complete!")
                 
                 # Display results
                 st.markdown("### <i class='fas fa-table'></i> Batch Results", unsafe_allow_html=True)
@@ -887,7 +873,7 @@ def main():
                         error_val = 100 - acc_val
                         
                         fig_acc = go.Figure(data=[go.Pie(
-                            labels=['✅ Prediksi Benar', '❌ Prediksi Salah'],
+                            labels=['Prediksi Benar', 'Prediksi Salah'],
                             values=[acc_val, error_val],
                             marker=dict(colors=['#28a745', '#dc3545']),
                             hole=0.5,
@@ -919,7 +905,7 @@ def main():
                 
                 with col1:
                     st.success(f"""
-                    **✅ Model Performance**
+                    **<i class="fas fa-trophy"></i> Model Performance**
                     - Akurasi: {accuracy}
                     - Kappa: {kappa}
                     - Status: {'Sangat Baik' if kappa != 'N/A' and float(kappa) > 0.6 else 'Baik'}
@@ -955,7 +941,7 @@ def main():
     
     # TAB 4: Information
     with tab4:
-        st.markdown("### 📚 Informasi Proyek")
+        st.markdown("### <i class='fas fa-info-circle'></i> Informasi Proyek", unsafe_allow_html=True)
         
         # ========== HEADER PROJECT ==========
         st.markdown("""
@@ -971,16 +957,15 @@ def main():
         with st.container():
             st.markdown("""
 <div style="background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
-<h3 style="color: #667eea; margin-top: 0;">📋 Latar Belakang</h3>
+<h3 style="color: #667eea; margin-top: 0;"><i class="fas fa-book"></i> Latar Belakang</h3>
 <p style="text-align: justify; line-height: 1.8;">Kanker merupakan salah satu penyebab kematian tertinggi di dunia. Diagnosis dini sangat penting untuk meningkatkan peluang kesembuhan pasien. Analisis citra histopatologi adalah metode standar untuk mendeteksi kanker, namun proses manual memerlukan waktu lama dan keahlian khusus dari patolog. Sistem klasifikasi otomatis menggunakan machine learning dapat membantu mempercepat proses diagnosis dan memberikan second opinion yang objektif.</p>
 </div>
 """, unsafe_allow_html=True)
         
-        # ========== About This System (preserved for compatibility)
-        st.markdown("""
-        
-        ## <i class="fas fa-bullseye"></i> Tujuan & Rumusan Masalah
-        """)
+        # ========== Tujuan & Rumusan Masalah ==========
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("### <i class='fas fa-bullseye'></i> Tujuan & Rumusan Masalah", unsafe_allow_html=True)
+        st.markdown("<br>", unsafe_allow_html=True)
         
         col1, col2 = st.columns(2)
         
@@ -995,7 +980,7 @@ def main():
         with col2:
             st.markdown("""
 <div style="background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); height: 100%;">
-<h3 style="color: #667eea; margin-top: 0;">❓ Rumusan Masalah</h3>
+<h3 style="color: #667eea; margin-top: 0;"><i class="fas fa-question-circle"></i> Rumusan Masalah</h3>
 <ul style="line-height: 2.0;"><li>Bagaimana mengklasifikasikan citra histopatologi secara otomatis?</li><li>Algoritma machine learning apa yang efektif untuk deteksi kanker?</li><li>Bagaimana meningkatkan akurasi dengan data terbatas?</li><li>Bagaimana mengimplementasikan sistem yang user-friendly?</li></ul>
 </div>
 """, unsafe_allow_html=True)
@@ -1046,36 +1031,14 @@ def main():
         
         st.markdown("<br>", unsafe_allow_html=True)
         
-        st.markdown("""
-        
-        ## 🔬 Metodologi & Technology Stack
-        
-        - **Algorithm**: Support Vector Machine (SVM) with Linear Kernel
-        - **Image Processing**: scikit-image
-        - **Framework**: Streamlit
-        - **Visualization**: Plotly, Matplotlib
-        - **Model Training**: scikit-learn
-        
-        ## � Model Specifications
-        
-        - **Input Size**: 224×224×3 RGB images
-        - **Features**: 150,528 features per image
-        - **Preprocessing**: 
-          - Automatic grayscale to RGB conversion
-          - Image normalization [0, 1]
-          - Standard scaling with StandardScaler
-        - **Training**: 
-          - Data augmentation (4x factor)
-          - Rotation, flip, brightness adjustments
-          - Class weight balancing
-        
-        ## 🚀 Cara Penggunaan Sistem
-        """)
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("### <i class='fas fa-cogs'></i> Metodologi & Technology Stack", unsafe_allow_html=True)
+        st.markdown("<br>", unsafe_allow_html=True)
         
         with st.container():
             st.markdown("""
 <div style="background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
-<h3 style="color: #667eea; margin-top: 0;">🔬 Metodologi</h3>
+<h3 style="color: #667eea; margin-top: 0;"><i class="fas fa-cogs"></i> Metodologi</h3>
 </div>
 """, unsafe_allow_html=True)
             
@@ -1083,13 +1046,13 @@ def main():
             
             with col1:
                 st.markdown("""
-                **1️⃣ Preprocessing:**
+                **1. Preprocessing:**
                 - Resize gambar ke 224×224×3
                 - Normalisasi piksel [0, 1]
                 - Konversi grayscale ke RGB
                 - Flatten menjadi vector 150,528 fitur
                 
-                **2️⃣ Data Augmentation:**
+                **2. Data Augmentation:**
                 - Faktor augmentasi: 4x
                 - Rotasi: ±30 derajat
                 - Horizontal & vertical flip
@@ -1098,13 +1061,13 @@ def main():
             
             with col2:
                 st.markdown("""
-                **3️⃣ Model Training:**
+                **3. Model Training:**
                 - Algoritma: Support Vector Machine (SVM)
                 - Kernel: Linear
                 - Split data: 80% training, 20% testing
                 - Scaling: StandardScaler
                 
-                **4️⃣ Evaluation:**
+                **4. Evaluation:**
                 - Akurasi, Precision, Recall, F1-Score
                 - Confusion Matrix
                 - ROC-AUC Score
@@ -1115,8 +1078,8 @@ def main():
         
         st.markdown("""
         
-        ## <i class="fas fa-chart-line"></i> Hasil Penelitian
-        """)
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("### <i class='fas fa-chart-line'></i> Hasil Penelitian", unsafe_allow_html=True)""")
         
         with st.container():
             st.markdown("""
@@ -1177,9 +1140,9 @@ def main():
         with st.container():
             st.markdown("""
 <div style="background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
-<h3 style="color: #667eea; margin-top: 0;">✅ Kesimpulan</h3>
+<h3 style="color: #667eea; margin-top: 0;"><i class="fas fa-check-circle"></i> Kesimpulan</h3>
 <ol style="line-height: 2.0; text-align: justify;"><li>Sistem berhasil mengklasifikasikan citra histopatologi dengan akurasi <b>75.44%</b></li><li>SVM dengan kernel linear efektif untuk klasifikasi 3 kategori kanker</li><li>Data augmentation 4x meningkatkan performa model secara signifikan</li><li>Kelas NON KANKER memiliki performa terbaik dengan recall 100%</li><li>Sistem dapat digunakan sebagai <i>screening tool</i> untuk mendukung diagnosis medis</li></ol>
-<h3 style="color: #667eea; margin-top: 30px;">🔮 Saran Pengembangan</h3>
+<h3 style="color: #667eea; margin-top: 30px;"><i class="fas fa-lightbulb"></i> Saran Pengembangan</h3>
 <ul style="line-height: 2.0; text-align: justify;"><li>Menambah jumlah dataset untuk meningkatkan generalisasi model</li><li>Mengeksplorasi algoritma deep learning (CNN) untuk akurasi lebih tinggi</li><li>Implementasi ensemble learning untuk kombinasi multiple models</li><li>Pengembangan fitur explainable AI untuk transparansi prediksi</li></ul>
 </div>
 """, unsafe_allow_html=True)
@@ -1192,7 +1155,7 @@ def main():
         with col1:
             st.markdown("""
 <div style="background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-<h3 style="color: #667eea; margin-top: 0;">👥 Tim Pengembang</h3>
+<h3 style="color: #667eea; margin-top: 0;"><i class="fas fa-users"></i> Tim Pengembang</h3>
 <p><b>Kelompok 4 - IF-10</b></p>
 <p>Proyek Sains Data</p>
 <p style="color: #64748b; font-size: 14px; margin-top: 15px;">Institut Teknologi Del<br>Fakultas Informatika dan Teknik Elektro</p>
@@ -1202,7 +1165,7 @@ def main():
         with col2:
             st.markdown("""
 <div style="background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-<h3 style="color: #667eea; margin-top: 0;">🛠️ Technology Stack</h3>
+<h3 style="color: #667eea; margin-top: 0;"><i class="fas fa-tools"></i> Technology Stack</h3>
 <ul style="line-height: 1.8;"><li><b>Machine Learning:</b> scikit-learn</li><li><b>Image Processing:</b> scikit-image</li><li><b>Web Framework:</b> Streamlit</li><li><b>Visualization:</b> Plotly, Matplotlib</li><li><b>Data Processing:</b> NumPy, Pandas</li></ul>
 </div>
 """, unsafe_allow_html=True)
@@ -1212,7 +1175,7 @@ def main():
         <div style="text-align: center; color: #64748b; padding: 20px;">
             <p style="font-size: 14px;">© 2026 Cancer Classification System - Kelompok 4 IF-10</p>
             <p style="font-size: 12px; margin-top: 10px;">
-                Developed with ❤️ using Python & Streamlit | For Educational & Research Purposes
+                Developed with <i class="fas fa-heart" style="color: #e74c3c;"></i> using Python & Streamlit | For Educational & Research Purposes
             </p>
         </div>
         """, unsafe_allow_html=True)
